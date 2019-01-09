@@ -63,8 +63,55 @@ def check_length(data,length):
     else:
         return 1
 
+
+def get_sms(d, K):
+    """
+    Try and make it as simple as possible. Added this method to solve the problem
+    But you can fintune the variables and try and make it testable or use similar
+    ideas for your methods
+
+    Testing
+    ========
+    Test for varying number of SMS e.g. message with varying length
+    Test that the method accepts only Strings for :d
+    Test that the method accepts only integers for K
+    Test for special chars in message
+    Test that -1 is returned when K is less than one word (means cannot divide message)
+
+    :param d: (str) The Message to divide
+    :param K: (int) The length of letters per SMS
+    :return: (str) Array of SMS and number of divisions
+    """
+    smsdata = []
+    sms = ""
+    words = d.split(" ")
+
+    for word in words:
+        if len(word) > K:
+            return -1
+
+        # Sample exception used in your test for K as integer
+        # In your test you can do something like:
+        # with self.assertRaises(TypeError):
+        #   getSMS("fake SMS", 2)
+
+        if not isinstance(K, int):
+            raise TypeError("K must be an Integer")
+
+        if len(sms.strip()) + len(word) <= K:
+            sms += word + " "
+        else:
+            smsdata.append(sms.strip())
+            sms = word + " "
+
+    smsdata.append(sms.strip())
+    print(smsdata)
+    return 'Number of SMS is {}'.format(len(smsdata))
+
 if __name__ == "__main__":
 
-    string_taken_as_input = input("Enter the string that will be sent as sms : \n")
-    ob1kenobi = sms(string_taken_as_input)
-    ob1kenobi.adjust_sms(10)
+    # string_taken_as_input = input("Enter the string that will be sent as sms : \n")
+    # ob1kenobi = sms(string_taken_as_input)
+    # ob1kenobi.adjust_sms(10)
+
+    print(get_sms("This is a very long SMS to send", 4))
